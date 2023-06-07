@@ -79,7 +79,7 @@
                                     <span>{{ page }}</span>
                                 {% else %}
                                     <a href="/?page={{ page }}">{{ page }}</a>
-                                    {% if "quantity" in url_for(request.endpoint) %}
+                                    {% if "quantity" in {{ url_for(request.endpoint) }}%}
                                         <a href="{{ url_for(request.endpoint) }}/?page={{ page }}&quantity={{ quantity }}">{{ page }}</a>
                                     {% endif %}
                                 {% endif %}
