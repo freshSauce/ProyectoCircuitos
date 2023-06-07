@@ -6,7 +6,7 @@ import os
 class Firebase:
     def __init__(self):
         if os.environ.get("FLASK_ENV") == "production":
-            self.cred = credentials.Certificate('etc/secrets/key.json')
+            self.cred = credentials.Certificate('/etc/secrets/key.json')
         else:
             self.cred = credentials.Certificate('app/key.json')
         self.data = None
