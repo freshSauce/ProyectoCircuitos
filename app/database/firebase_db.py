@@ -1,7 +1,10 @@
+import tempfile
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 import os
+import pandas as pd
+import json
 
 class Firebase:
     def __init__(self):
@@ -19,7 +22,7 @@ class Firebase:
         })
 
         if not self.ref:
-            self.ref = db.reference('pase_de_lista')
+            self.ref = db.reference('ruta_en_la_database')
         
     
     def fetch(self, reference):
@@ -29,7 +32,9 @@ class Firebase:
         return self.data
     
     def pagination(self, step=5):
-        self.data = self.fetch('pase_de_lista')
+        self.data = self.fetch('ruta_en_la_database')
+        local_data = [self.data[key] for key in self.data.keys()]
+        self.data = local_data
         data_length = len(self.data)
         pages = data_length // step
         if data_length % step != 0:
@@ -37,4 +42,11 @@ class Firebase:
         for page in range(pages):
             start = page * step
             end = start + step
-            yield self.ref.order_by_key().start_at(str(start)).end_at(str(end - 1)).get()
+            yield self.data[start:end]
+    
+    def export_to_excel(self):
+        self.data = self.fetch('ruta_en_la_database')
+        df = pd.read_json(json.dumps(self.data))
+        with tempfile.NamedTemporaryFile(mode='r+') as temp:
+            df.to_excel(temp.name + ".xlsx")
+        return temp.name + ".xlsx"

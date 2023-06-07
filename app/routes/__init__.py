@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, send_file
 from flask_login import login_user, logout_user, current_user, login_required
 from ..models import User
 from ..database import db, firebase_db
+import os
+from time import sleep
 
 auth = Blueprint("auth", __name__)
 main = Blueprint("main", __name__)
@@ -88,7 +90,8 @@ def index():
     current = int(request.args.get("page", 0))
     quantity = int(request.args.get("quantity", 15))
     pages = list(database.pagination(quantity))
-    data = pages[current].values()
+    print(pages)
+    data = pages[current]
     return render_template("index.html", title="Lista - ITSPA", data=data, pages=list(range(len(pages))), current=current)
 
 @login_required
@@ -107,9 +110,19 @@ def remove_access():
             
 @api.route("/api/get_list", methods=["GET"])
 def get_list():
-    pages = int(request.args["pages"])
-    data = list(database.pagination(pages))
+    data = database.fetch('ruta_en_la_database')
+    return {"data": data}, 200
 
-    return {"data": data, "pages": len(data)}, 200
-        
+@api.route("/api/export", methods=["GET"])
+def export():
+    # Generar el archivo Excel
+    filename = database.export_to_excel()
+
+    # Obtener el archivo Excel generado
+    excel_file = filename
+
+    # Enviar el archivo como Blob
+
+    return send_file(excel_file, as_attachment=True, download_name='pase_de_lista.xlsx')
+    
 
