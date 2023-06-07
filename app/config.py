@@ -25,6 +25,7 @@ class ProductionConfig(Config):
     # Configuraciones específicas para el entorno de producción
 
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
     # Resto de tus configuraciones de producción...
 
 
