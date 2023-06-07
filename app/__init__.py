@@ -4,9 +4,13 @@ from .models import User
 from .routes import auth, main, api
 from .config import app_config
 from .database import init_db, db
+import os
 
 app = Flask(__name__)
-app.config.from_object(app_config["development"])
+if os.environ.get("FLASK_ENV") == "production":
+    app.config.from_object(app_config["production"])
+else:
+    app.config.from_object(app_config["development"])
 
 
 # Configuración de Flask-Login

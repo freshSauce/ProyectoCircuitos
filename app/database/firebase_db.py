@@ -1,10 +1,14 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import os
 
 class Firebase:
     def __init__(self):
-        self.cred = credentials.Certificate('app/key.json')
+        if os.environ.get("FLASK_ENV") == "production":
+            self.cred = credentials.Certificate('etc/secrets/key.json')
+        else:
+            self.cred = credentials.Certificate('app/key.json')
         self.data = None
         self.ref = None
         
