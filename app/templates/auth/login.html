@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>{{ title}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+    <form class="form-signin" action="/login" method="POST">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72"
+            height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
+        {% if error_message %}
+        <p>{{ error_message }}</p>
+        {% endif %}
+        <label for="inputEmail" class="sr-only">Correo Electrónico</label>
+        <input name="inputEmail" type="email" id="inputEmail" class="form-control" placeholder="Correo Electrónico"
+            required autofocus>
+        <label for="inputPassword" class="sr-only">Contraseña</label>
+        <input name="inputPassword" type="password" id="inputPassword" class="form-control" placeholder="Contraseña"
+            required>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="remember" value="remember-me"> Recuérdame
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+        <button type="button" class="btn btn-lg btn-primary btn-block" onclick="redirectToRegister()">Ir a
+            Registro</button>
+
+    </form>
+
+</body>
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+
+
+</html>

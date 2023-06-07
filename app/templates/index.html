@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>{{ title }}</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                Pase de Lista - ITSPA <a href="/logout">Cerrar sesión</a>
+            </a>
+
+        </div>
+    </nav>
+
+    <main class="py-4">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Lista de Alumnos
+                        </div>
+
+                        <div class="card-body">
+
+                            <div style="margin-bottom: 20px;">
+
+                                <input type="text" id="filter0" placeholder="Filtrar por nombre">
+                                <input type="text" id="filter1" placeholder="Filtrar por matricula">
+                                <input type="text" id="filter2" placeholder="Filtrar por fecha y hora">
+                                <input type="text" id="filter3" placeholder="Filtrar por salón">
+                                <form id="quantity-form" style="float: right; margin-right: 50px;">
+                                    <label for="quantity-dropdown">Cantidad:</label>
+                                    <select id="quantity-dropdown" onchange="reloadPage()">
+                                        <option value="default">-</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </form>
+
+                            </div>
+
+                            <table id="filter" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Matricula</th>
+                                        <th>Fecha y Hora</th>
+                                        <th>Salon</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for item in data %}
+                                    <tr>
+                                        <td>{{ item.nombre }}</td>
+                                        <td>{{ item.matricula }}</td>
+                                        <td>{{ item.fecha ~ " - " ~ item.hora}}</td>
+                                        <td>{{ item.salon }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% for page in pages %}
+                            {% if page == current %}
+                            <span>{{ page }}</span>
+                            {% else %}
+                            <a href="/?page={{ page }}">{{ page }}</a>
+                            {% if quantity %}
+
+                            {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+
+</html>
