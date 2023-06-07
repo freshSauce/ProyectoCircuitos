@@ -77,10 +77,10 @@
                             {% for page in pages %}
                                 {% if page == current %}
                                     <span>{{ page }}</span>
-                                    {% else %}
+                                {% else %}
                                     <a href="/?page={{ page }}">{{ page }}</a>
-                                    {% if quantity %}
-                                        <a href="/?page={{ page }}&quantity={{ quantity }}">{{ page }}</a>
+                                    {% if "quantity" in url_for(request.endpoint) %}
+                                        <a href="{{ url_for(request.endpoint) }}/?page={{ page }}&quantity={{ quantity }}">{{ page }}</a>
                                     {% endif %}
                                 {% endif %}
                             {% endfor %}
