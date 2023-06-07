@@ -78,15 +78,15 @@
                                 </tbody>
                             </table>
                             {% for page in pages %}
-                            {% if page == current %}
-                            <span>{{ page }}</span>
-                            {% else %}
-                            {% if request.args.get('quantity') %}
-                            <a href="/?page={{ page }}&quantity={{ request.args.get('quantity') }}">{{ page }}</a>
-                            {% else %}
-                            <a href="/?page={{ page }}">{{ page }}</a>
-                            {% endif %}
-                            {% endif %}
+                                {% if page == current %}
+                                    <span>{{ page }}</span>
+                                {% else %}
+                                    {% if request.args.get('quantity') %}
+                                        <a href="/?page={{ page }}&quantity={{ request.args.get('quantity') }}">{{ page }}</a>
+                                    {% else %}
+                                        <a href="/?page={{ page }}">{{ page }}</a>
+                                    {% endif %}
+                                {% endif %}
                             {% endfor %}
 
                         </div>

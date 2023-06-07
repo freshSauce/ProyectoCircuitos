@@ -90,7 +90,8 @@ def index():
     current = int(request.args.get("page", 0))
     quantity = int(request.args.get("quantity", 15))
     pages = list(database.pagination(quantity))
-    data = pages[current].values()
+    print(pages)
+    data = pages[current]
     return render_template("index.html", title="Lista - ITSPA", data=data, pages=list(range(len(pages))), current=current)
 
 @login_required
@@ -109,10 +110,8 @@ def remove_access():
             
 @api.route("/api/get_list", methods=["GET"])
 def get_list():
-    pages = int(request.args["pages"])
-    data = list(database.pagination(pages))
-
-    return {"data": data, "pages": len(data)}, 200
+    data = database.fetch('ruta_en_la_database')
+    return {"data": data}, 200
 
 @api.route("/api/export", methods=["GET"])
 def export():
