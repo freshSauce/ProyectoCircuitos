@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -14,7 +15,9 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="#">
-                Pase de Lista - ITSPA <a href="/logout">Cerrar sesión</a>
+                Pase de Lista - ITSPA
+                <a href="/logout">Cerrar sesión</a>
+
             </a>
 
         </div>
@@ -75,19 +78,25 @@
                                 </tbody>
                             </table>
                             {% for page in pages %}
-                                {% if page == current %}
-                                    <span>{{ page }}</span>
-                                {% else %}
-                                    <a href="/?page={{ page }}">{{ page }}</a>
-                                    {% if "quantity" in {{ url_for(request.endpoint) }}%}
-                                        <a href="{{ url_for(request.endpoint) }}/?page={{ page }}&quantity={{ quantity }}">{{ page }}</a>
-                                    {% endif %}
-                                {% endif %}
+                            {% if page == current %}
+                            <span>{{ page }}</span>
+                            {% else %}
+                            {% if request.args.get('quantity') %}
+                            <a href="/?page={{ page }}&quantity={{ request.args.get('quantity') }}">{{ page }}</a>
+                            {% else %}
+                            <a href="/?page={{ page }}">{{ page }}</a>
+                            {% endif %}
+                            {% endif %}
                             {% endfor %}
 
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="center-container">
+                <button class="excel-button" onclick="exportToExcel()">
+                    Exportar como Excel <i class="fas fa-file-excel"></i>
+                </button>
             </div>
 
 
@@ -97,5 +106,20 @@
 
     <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </body>
+<style>
+    .excel-button {
+    background-color: #217346;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+.excel-button:hover {
+    background-color: #1e6039;
+}
+</style>
 
 </html>

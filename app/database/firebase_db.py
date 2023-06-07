@@ -1,7 +1,10 @@
+import tempfile
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 import os
+import pandas as pd
+import json
 
 class Firebase:
     def __init__(self):
@@ -38,3 +41,10 @@ class Firebase:
             start = page * step
             end = start + step
             yield self.ref.order_by_key().start_at(str(start)).end_at(str(end - 1)).get()
+    
+    def export_to_excel(self):
+        self.data = self.fetch('pase_de_lista')
+        df = pd.read_json(json.dumps(self.data))
+        with tempfile.NamedTemporaryFile(mode='r+') as temp:
+            df.to_excel(temp.name + ".xlsx")
+        return temp.name + ".xlsx"

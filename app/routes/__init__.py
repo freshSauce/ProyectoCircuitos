@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, send_file
 from flask_login import login_user, logout_user, current_user, login_required
 from ..models import User
 from ..database import db, firebase_db
+import os
+from time import sleep
 
 auth = Blueprint("auth", __name__)
 main = Blueprint("main", __name__)
@@ -111,5 +113,17 @@ def get_list():
     data = list(database.pagination(pages))
 
     return {"data": data, "pages": len(data)}, 200
-        
+
+@api.route("/api/export", methods=["GET"])
+def export():
+    # Generar el archivo Excel
+    filename = database.export_to_excel()
+
+    # Obtener el archivo Excel generado
+    excel_file = filename
+
+    # Enviar el archivo como Blob
+
+    return send_file(excel_file, as_attachment=True, download_name='pase_de_lista.xlsx')
+    
 
