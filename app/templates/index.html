@@ -75,13 +75,14 @@
                                 </tbody>
                             </table>
                             {% for page in pages %}
-                            {% if page == current %}
-                            <span>{{ page }}</span>
-                            {% else %}
-                            <a href="/?page={{ page }}">{{ page }}</a>
-                            {% if quantity %}
-
-                            {% endif %}
+                                {% if page == current %}
+                                    <span>{{ page }}</span>
+                                    {% else %}
+                                    <a href="/?page={{ page }}">{{ page }}</a>
+                                    {% if quantity %}
+                                        <a href="/?page={{ page }}&quantity={{ quantity }}">{{ page }}</a>
+                                    {% endif %}
+                                {% endif %}
                             {% endfor %}
 
                         </div>
